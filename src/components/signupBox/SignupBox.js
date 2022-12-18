@@ -3,8 +3,14 @@ import "./SignupBox.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 const SignupBox = () => {
+
+
+const navigate = useNavigate();
 
 const emailAddresses =[
   'test@gmail.com',
@@ -12,10 +18,21 @@ const emailAddresses =[
   'onabajooluwakeji.daniel@gmail.com'
 ]
 
+const usernames =[
+  'oluwakeji',
+  'total@gmail.com',
+  'onabajooluwakeji.daniel@gmail.com'
+]
+
+const phoneNumbers =[
+  '08084184204',
+  '+2349037529823',
+]
+
 // RegEx for phone number validation
 const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
 
-
+//Validation
 const signupSchema = Yup.object().shape({
   firstname:Yup.string().required("Firstname is required"),
   lastname:Yup.string().required("Lastname is required"),
@@ -25,8 +42,12 @@ const signupSchema = Yup.object().shape({
   .notOneOf(emailAddresses, "Email already exist").required("Email is required"),
   phone: Yup.string()
   .matches(phoneRegExp, "Phone number is not valid")
-  .required("*Phone number required"),  
-  username:Yup.string().required("Username is required"),
+  .notOneOf(phoneNumbers, "Phone number already register to a user")
+  .required("Phone number required"),  
+  username:Yup.string()
+  .lowercase()
+  .notOneOf(usernames, "Username has been taken")
+  .required("Username is required"),
   state:Yup.string().required("State is required"),
   lga:Yup.string().required("Your LGA is required"),
   password:Yup.string().min(8, "Password is not secure")
@@ -36,19 +57,6 @@ const signupSchema = Yup.object().shape({
   cPassword:Yup.string().oneOf([Yup.ref('password')], "Password must be the same").required("Please confirm password"),
   acceptTerms: Yup.bool().oneOf([true], 'You must accept before submitting'),
 });
-
-// const sendRequest = async (props) => {
-//   const res = await axios
-//     .post("http://localhost:5000/api/signup", props)
-//     .catch((err) => console.log(err))
-//     .finally(() => {
-//       // Hide loading text while fetching profile
-//       setLoading(false);
-//       setActiveProfile(true);
-//     })
-//   const data = await res.data;
-//   return data;
-// };
 
 
   return (
@@ -69,9 +77,7 @@ const signupSchema = Yup.object().shape({
               validationSchema={signupSchema}
               onSubmit={(values, actions) => {
                 
-                console.log(values);
                 // alert(JSON.stringify(values, null, 2));
-                // actions.setSubmitting(true);
                 
                   axios.post("http://localhost:5000/api/signup", {
                     firstname: values.firstname,
@@ -84,9 +90,39 @@ const signupSchema = Yup.object().shape({
                     password: values.password,
                   })
                   .then( (response) => {
-                    console.log(response.data.message);
+                    // console.log(response.data.message);
+
+                    toast.success("😇 You've just signed up successfully!", {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                      });
+                      
+                      actions.setSubmitting(false);
+                      
+                    setTimeout(() => {                      
+                      navigate("/login");
+                    }, 4000);
+
+
                   }).catch((err) => {
-                    console.log(err.response.data.errors);
+                    // console.log(err.response.data.message);
+                    toast.error(`Oops! ${err.response.data.message}` , {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "light",
+                      });
+
                   }).finally(() => {     
                   actions.setSubmitting(false);
                     });
@@ -270,6 +306,7 @@ const signupSchema = Yup.object().shape({
     {isSubmitting ? "Please wait..." : "Submit"}
   </button>
   </div>
+  <ToastContainer />
                 </Form>
               )}
             </Formik>
