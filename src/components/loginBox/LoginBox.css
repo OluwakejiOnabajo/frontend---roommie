@@ -1,0 +1,104 @@
+.form-box{
+	padding: 20px;
+	margin: 20px auto;
+	max-width: 500px;
+	flex-grow: 1;
+
+}
+.countdown{
+	margin-bottom: 30px;
+	padding-top: 20px;
+	background-color: #F0F0F0 !important;
+}
+.countdown .countdown-item{
+	width: 60px;
+	background-color: #1976D2 !important;
+	color: #fff !important;
+	padding-top: 5px;
+}
+
+.countdown .count{
+	font-weight: bold;
+	margin-bottom: 2px;
+}
+
+.countdown .instruction{
+	margin: 20px 10px;
+	padding: 10px;
+	text-align: justify;
+	background-color: #FAFAFA !important;
+}
+
+.login-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.login-box .column {
+  flex: 50%;
+  /* margin: 0 30px; */
+}
+
+.login-box .column:first-of-type {
+	margin-right: 30px;
+  }
+
+  .login-box .column:last-of-type {
+	margin: 0 30px;
+  }
+
+.login-box .det{
+text-align: left;
+}
+
+.login-box .det-icon{
+	padding: 8px 10px;
+	border-radius: 50px;
+	text-align: left;
+	line-height: 2;
+	vertical-align: top;
+	background-color: #1bbd7e;
+	align-content: center;
+	width: 100px;
+	display: flex;
+	color: #FFFFFF;
+}
+
+.login-box .det-icon .icon{
+	margin-top: 2px;
+	margin-right: 3px;
+	margin-left: 3px;
+}
+
+.login-box .det-icon span{
+	font-weight: bold;
+}
+
+.login-box .details{
+	margin-left: 40px;
+}
+	
+
+@media screen and (max-width: 1040px) {
+	.login-box {
+		flex-direction: column;
+	  }
+
+	  .login-box .det{
+		text-align: center;
+		}
+
+		.login-box .det-icon{
+			margin: auto;
+		}
+
+		.login-box .details{
+			margin-left: 0;
+		}
+  }
+
+.hide{
+	display: none !important;
+	}
