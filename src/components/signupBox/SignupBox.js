@@ -9,8 +9,16 @@ import { useNavigate } from "react-router-dom";
 
 const SignupBox = () => {
 
-
 const navigate = useNavigate();
+
+//  (async () => {
+//       try {
+//         const result = await axios.get("localhost:5000/api/getUser")
+//         console.log(result.data);
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     })()
 
 const emailAddresses =[
   'test@gmail.com',
@@ -79,7 +87,7 @@ const signupSchema = Yup.object().shape({
                 
                 // alert(JSON.stringify(values, null, 2));
                 
-                  axios.post("http://localhost:5000/api/signup", {
+                    axios.post("http://localhost:5000/api/signup", {
                     firstname: values.firstname,
                     lastname: values.lastname,
                     email: values.email,
