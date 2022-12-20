@@ -12,6 +12,7 @@ function routes() {
         <Route path='/' >
         <Route index element={<Home />} />
         <Route  exact path="signup" element={<Signup />} />
+        <Route  exact path="home" element={<Home />} />
         <Route  exact path="login" element={<Login />} />
         <Route  exact path=":username" element={<Login />} />
         <Route path='/privacy-policy' component={() => { 

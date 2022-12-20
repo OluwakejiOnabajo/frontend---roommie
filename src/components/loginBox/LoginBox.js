@@ -74,7 +74,7 @@ const LoginSchema = Yup.object().shape({
               validationSchema={LoginSchema}
               onSubmit={(values, actions) => {
                 
-                alert(JSON.stringify(values, null, 2));
+                // alert(JSON.stringify(values, null, 2));
                  axios.post("http://localhost:5000/api/login", {
                     email: values.email,
                     password: values.password,
@@ -96,7 +96,7 @@ const LoginSchema = Yup.object().shape({
                       actions.setSubmitting(false);
                       
                     setTimeout(() => {                      
-                      navigate("/user");
+                      navigate("/home");
                     }, 4000);
 
 
